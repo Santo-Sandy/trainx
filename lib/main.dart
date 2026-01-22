@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
         title: 'Home',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 252, 200, 200),
+            seedColor: const Color.fromARGB(255, 0, 255, 157),
           ),
         ),
         home: MyHomePage(),
@@ -64,7 +64,7 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: TextButton(onPressed: () {}, child: Text("+")),
+        child: Icon(Icons.favorite,color: Colors.white,),
       ),
     );
   }
