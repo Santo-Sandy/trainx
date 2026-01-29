@@ -1,3 +1,4 @@
+import 'package:StoreLink/home.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,8 @@ class MyAppState extends ChangeNotifier {
 }
 
 class MyHomePage extends StatelessWidget {
+  FocusNode _focusNode = FocusNode();
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -60,11 +63,36 @@ class MyHomePage extends StatelessWidget {
             child: Text('Click Me'),
           ),
           Center(child: GamePage()),
+          SizedBox(height: 60),
+          TextField(
+            maxLength: 5,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(35)),
+              ),
+            ),
+            controller: controller,
+            autofocus: true,
+            focusNode: _focusNode,
+            onSubmitted: (String input) {
+              controller.clear();
+              _focusNode.requestFocus();
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => home(controller.text)),
+              );
+            },
+            child: Text("click to navigate"),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.favorite,color: Colors.white,),
+        child: Icon(Icons.favorite, color: Colors.white),
       ),
     );
   }
