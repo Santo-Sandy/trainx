@@ -36,6 +36,12 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   FocusNode _focusNode = FocusNode();
   TextEditingController controller = TextEditingController();
+  _nameState namepa = _nameState();
+
+  displays(String word) {
+    namepa.display(word);
+  }
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -64,6 +70,8 @@ class MyHomePage extends StatelessWidget {
           ),
           Center(child: GamePage()),
           SizedBox(height: 60),
+          name(),
+          SizedBox(height: 60),
           TextField(
             maxLength: 5,
             decoration: InputDecoration(
@@ -75,8 +83,18 @@ class MyHomePage extends StatelessWidget {
             autofocus: true,
             focusNode: _focusNode,
             onSubmitted: (String input) {
+              displays(controller.text);
               controller.clear();
               _focusNode.requestFocus();
+            },
+          ),
+          TextFormField(
+            decoration: InputDecoration(labelText: "Email"),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Email is required";
+              }
+              return null;
             },
           ),
           ElevatedButton(
@@ -121,9 +139,7 @@ class MyAppBar extends StatelessWidget {
               tooltip: 'Menu',
               color: Colors.white,
             ),
-
             Expanded(child: title),
-
             IconButton(
               onPressed: null,
               icon: Icon(Icons.search, color: Colors.white),
@@ -164,6 +180,28 @@ class Tile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class name extends StatefulWidget {
+  const name({super.key});
+
+  @override
+  State<name> createState() => _nameState();
+}
+
+class _nameState extends State<name> {
+  String word = "Hi";
+
+  display(String name) {
+    setState(() {
+      this.word = name;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("Your typed word: " + word);
   }
 }
 
