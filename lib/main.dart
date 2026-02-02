@@ -1,8 +1,9 @@
 import 'package:StoreLink/home.dart';
+import 'package:StoreLink/layout/column.dart';
+import 'package:StoreLink/namewelcome.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:provider/provider.dart';
-import 'package:StoreLink/game.dart';
 
 void main() {
   runApp(const MainApp());
@@ -36,11 +37,6 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   FocusNode _focusNode = FocusNode();
   TextEditingController controller = TextEditingController();
-  _nameState namepa = _nameState();
-
-  displays(String word) {
-    namepa.display(word);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,266 +44,51 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: MyAppBar(
-          title: Text(
-            "StoreLink",
-            style: Theme.of(context).primaryTextTheme.titleMedium,
-          ),
+        backgroundColor: const Color.fromARGB(255, 150, 187, 194),
+        leading: Icon(Icons.flutter_dash, color: Colors.white),
+        title: Text(
+          "Flutter Practice",
+          style: TextStyle(fontSize: 20, color: Colors.white),
         ),
       ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Column(
-        children: [
-          Text('Click to see changes in console:'),
-          Text(appState.current.asLowerCase),
-
-          ElevatedButton(
-            onPressed: () {
-              print('button pressed!');
-            },
-            child: Text('Click Me'),
-          ),
-          Center(child: GamePage()),
-          SizedBox(height: 60),
-          name(),
-          SizedBox(height: 60),
-          TextField(
-            maxLength: 5,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(35)),
-              ),
-            ),
-            controller: controller,
-            autofocus: true,
-            focusNode: _focusNode,
-            onSubmitted: (String input) {
-              displays(controller.text);
-              controller.clear();
-              _focusNode.requestFocus();
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(labelText: "Email"),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Email is required";
-              }
-              return null;
-            },
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => home(controller.text)),
-              );
-            },
-            child: Text("click to navigate"),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.favorite, color: Colors.white),
-      ),
-    );
-  }
-}
-
-class MyAppBar extends StatelessWidget {
-  final Widget title;
-  MyAppBar({required this.title, super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: Container(
-        margin: EdgeInsets.all(0.0),
-        height: 40,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          color: const Color.fromARGB(255, 148, 225, 255),
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconButton(
-              onPressed: null,
-              icon: Icon(Icons.menu),
-              tooltip: 'Menu',
-              color: Colors.white,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => name()),
+                );
+              },
+              child: Text("Welcome"),
             ),
-            Expanded(child: title),
-            IconButton(
-              onPressed: null,
-              icon: Icon(Icons.search, color: Colors.white),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => home(controller.text)),
+                );
+              },
+              child: Text("Counter"),
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => columnpage()),
+                );
+              },
+              child: Text("Layouts"),
             ),
           ],
         ),
       ),
     );
-  }
-}
-
-class Tile extends StatelessWidget {
-  const Tile(this.letter, this.hitType, {super.key});
-
-  final String letter;
-  final HitType hitType;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      curve: Curves.bounceIn,
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
-        color: switch (hitType) {
-          HitType.hit => Colors.green,
-          HitType.partial => Colors.yellow,
-          HitType.miss => Colors.grey,
-          _ => Colors.white,
-        },
-      ),
-      child: Center(
-        child: Text(
-          letter.toUpperCase(),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ),
-    );
-  }
-}
-
-class name extends StatefulWidget {
-  const name({super.key});
-
-  @override
-  State<name> createState() => _nameState();
-}
-
-class _nameState extends State<name> {
-  String word = "Hi";
-
-  display(String name) {
-    setState(() {
-      this.word = name;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text("Your typed word: " + word);
-  }
-}
-
-class GamePage extends StatefulWidget {
-  GamePage({super.key});
-
-  @override
-  State<GamePage> createState() => _GamePageState();
-}
-
-class _GamePageState extends State<GamePage> {
-  final Game _game = Game();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        spacing: 5.0,
-        children: [
-          for (var guess in _game.guesses)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (var letter in guess)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 2.5,
-                      vertical: 2.5,
-                    ),
-                    child: Tile(letter.char, letter.type),
-                  ),
-              ],
-            ),
-          GuessInput(
-            onSubmitGuess: (String guess) {
-              print(guess);
-              setState(() {
-                _game.guess(guess);
-              });
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class GuessInput extends StatelessWidget {
-  GuessInput({super.key, required this.onSubmitGuess});
-
-  final void Function(String) onSubmitGuess;
-
-  final TextEditingController _textEditingController = TextEditingController();
-
-  final FocusNode _focusNode = FocusNode();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              maxLength: 5,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(35)),
-                ),
-              ),
-              controller: _textEditingController,
-              autofocus: true,
-              focusNode: _focusNode,
-              onSubmitted: (String input) {
-                onSubmitGuess(_textEditingController.text.trim());
-                _textEditingController.clear();
-                _focusNode.requestFocus();
-              },
-            ),
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            onSubmitGuess(_textEditingController.text.trim());
-            _textEditingController.clear();
-            _focusNode.requestFocus();
-          },
-          padding: EdgeInsets.zero,
-          icon: Icon(Icons.arrow_circle_up),
-        ),
-      ],
-    );
-  }
-}
-
-class ExampleWidget extends StatefulWidget {
-  ExampleWidget({super.key});
-
-  @override
-  State<ExampleWidget> createState() => _ExampleWidgetState();
-}
-
-class _ExampleWidgetState extends State<ExampleWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
