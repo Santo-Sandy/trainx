@@ -18,6 +18,32 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.4.0
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+  windows:
+    generate: true
+  macos:
+    generate: true
+  linux:
+    generate: true
+
+  image_path: "assets/images/logo/zoro.jpg"
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/logo/zoro.jpg
+
+  android: true
+  ios: true
+  web: true
+
 
 flutter:
   uses-material-design: true
