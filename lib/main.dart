@@ -1,12 +1,44 @@
-import 'package:StoreLink/home.dart';
-import 'package:StoreLink/layout/column.dart';
-import 'package:StoreLink/namewelcome.dart';
+import 'package:StoreLink/bloc/counter_bloc.dart';
+import 'package:StoreLink/counter.dart';
+import 'package:StoreLink/router.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(index());
+}
+
+class index extends StatelessWidget {
+  const index({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => MyAppState()),
+        ChangeNotifierProvider(create: (_) => counternum()),
+      ],
+      child: MultiBlocProvider(
+        providers: [BlocProvider(create: (_) => CounterBloc())],
+        child: const MyApp(),
+      ),
+    );
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+    );
+  }
 }
 
 class MainApp extends StatelessWidget {
@@ -14,18 +46,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Home',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 0, 255, 157),
-          ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Home',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 0, 255, 157),
         ),
-        home: MyHomePage(),
       ),
+      home: MyHomePage(),
     );
   }
 }
@@ -59,32 +88,51 @@ class MyHomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => name()),
-                );
+                context.go("/welcome");
               },
               child: Text("Welcome"),
             ),
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => home(controller.text)),
-                );
+                context.go("/counter/hi");
               },
               child: Text("Counter"),
             ),
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => columnpage()),
-                );
+                context.go("/counterscreen");
+              },
+              child: Text("Bloc Counter"),
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                context.go("/layout");
               },
               child: Text("Layouts"),
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                context.go("/stack");
+              },
+              child: Text("Stack"),
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                context.go("/scrolls");
+              },
+              child: Text("Scroll"),
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                context.go("/navigation");
+              },
+              child: Text("Navigation"),
             ),
           ],
         ),

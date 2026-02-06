@@ -11,7 +11,7 @@ class _nameState extends State<name> {
   String word = "";
   TextEditingController controll = TextEditingController();
 
-  display(String name) {
+  void display(String name) {
     setState(() {
       word = name;
     });

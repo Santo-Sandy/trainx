@@ -145,7 +145,7 @@ class listpage extends StatelessWidget {
       child: ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
-          return Container(
+          return SizedBox(
             width: 100,
             height: 100,
             child: Card(child: Center(child: Text(list[index]))),

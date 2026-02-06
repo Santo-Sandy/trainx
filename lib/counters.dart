@@ -1,4 +1,6 @@
+import 'package:StoreLink/counter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class home extends StatefulWidget {
   final name;
@@ -36,22 +38,29 @@ class counter extends StatefulWidget {
 }
 
 class _counterState extends State<counter> {
-  int count = 0;
-  void counter() {
-    setState(() {
-      count++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final counter = context.watch<counternum>();
     return Expanded(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Count: $count"),
-            ElevatedButton(onPressed: counter, child: Text("Counter")),
+            Text("Count: ${counter.counts}"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: context.read<counternum>().increments,
+                  child: Text("Increments"),
+                ),
+                ElevatedButton(
+                  onPressed: context.read<counternum>().decrements,
+                  child: Text("Decrements"),
+                ),
+              ],
+            ),
           ],
         ),
       ),
