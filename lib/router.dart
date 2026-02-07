@@ -1,6 +1,7 @@
 import 'package:StoreLink/bloc/counter_screen.dart';
 import 'package:StoreLink/column.dart';
 import 'package:StoreLink/counters.dart';
+import 'package:StoreLink/httpdio.dart';
 import 'package:StoreLink/main.dart';
 import 'package:StoreLink/namewelcome.dart';
 import 'package:StoreLink/navigation.dart';
@@ -36,5 +37,6 @@ final router = GoRouter(
         return navigated_screen(id);
       },
     ),
+    GoRoute(path: '/httpdio', builder: (context, state) => http_dio()),
   ],
 );

@@ -82,57 +82,76 @@ class MyHomePage extends StatelessWidget {
       ),
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                context.go("/welcome");
-              },
-              child: Text("Welcome"),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/welcome");
+                  },
+                  child: Text("Welcome"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/counter/hi");
+                  },
+                  child: Text("Counter"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/counterscreen");
+                  },
+                  child: Text("Bloc Counter"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/layout");
+                  },
+                  child: Text("Layouts"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/stack");
+                  },
+                  child: Text("Stack"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/scrolls");
+                  },
+                  child: Text("Scroll"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/navigation");
+                  },
+                  child: Text("Navigation"),
+                ),
+              ],
             ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/counter/hi");
-              },
-              child: Text("Counter"),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/counterscreen");
-              },
-              child: Text("Bloc Counter"),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/layout");
-              },
-              child: Text("Layouts"),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/stack");
-              },
-              child: Text("Stack"),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/scrolls");
-              },
-              child: Text("Scroll"),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                context.go("/navigation");
-              },
-              child: Text("Navigation"),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/httpdio");
+                  },
+                  child: Text("Http/Dio"),
+                ),
+                SizedBox(height: 40),
+              ],
             ),
           ],
         ),
