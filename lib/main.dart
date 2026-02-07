@@ -1,13 +1,19 @@
 import 'package:StoreLink/bloc/counter_bloc.dart';
 import 'package:StoreLink/counter.dart';
+import 'package:StoreLink/localstore.dart';
 import 'package:StoreLink/router.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserAdapter());
+  await Hive.openBox<store>('users');
   runApp(index());
 }
 
@@ -149,6 +155,13 @@ class MyHomePage extends StatelessWidget {
                     context.go("/httpdio");
                   },
                   child: Text("Http/Dio"),
+                ),
+                SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.go("/Localstore");
+                  },
+                  child: Text("Localstorage"),
                 ),
                 SizedBox(height: 40),
               ],
