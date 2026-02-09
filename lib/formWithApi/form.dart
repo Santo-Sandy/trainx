@@ -89,7 +89,28 @@ class _formdetailsState extends State<formdetails> {
                     }
                   },
                 ),
-
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUnfocus,
+                  controller: phonecontroller,
+                  maxLength: 10,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    labelText: "Mobile number*",
+                    prefixIcon: Container(width: 60, child: countryphone()),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Mobile number Required";
+                    } else if (RegExp(r'^[6-9].\d{9}$').hasMatch(value)) {
+                      return "Enter a valid mobile number";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUnfocus,
                   controller: phonecontroller,
@@ -354,9 +375,11 @@ class countryphone extends StatefulWidget {
 }
 
 class _countryphoneState extends State<countryphone> {
-  Countrysservices countrygetservices = Countrysservices();
+  CountrysService countrygetservices = CountrysService();
   List<Countrys> countrieslist = [];
-  Countrys? countries;
+  Countrys? selectedcountries;
+  Countrys? selectedcountriesdialcode;
+  Countrys? selectedcountriesflag;
   bool isloading = true;
 
   @override
@@ -367,7 +390,7 @@ class _countryphoneState extends State<countryphone> {
 
   loaddata() async {
     try {
-      countrieslist = await countrygetservices.getcountrys();
+      countrieslist = await countrygetservices.getCountries();
     } catch (e) {
       debugPrint(e.toString());
     } finally {
@@ -381,14 +404,22 @@ class _countryphoneState extends State<countryphone> {
   Widget build(BuildContext context) {
     return isloading
         ? CircularProgressIndicator()
-        : DropdownButtonFormField<Countrys>(
-            items: countrieslist.map((country) {
-              return DropdownMenuItem<Countrys>(
-                child: Text(country.name),
-                value: country,
-              );
-            }).toList(),
-            onChanged: (value) {},
+        : Flexible(
+            child: DropdownButtonFormField<Countrys>(
+              value: selectedcountriesdialcode,
+              items: countrieslist.map((country) {
+                return DropdownMenuItem<Countrys>(
+                  value: country,
+                  child: Text(
+                    country.dialCode,
+                    style: TextStyle(overflow: TextOverflow.fade),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }).toList(),
+              decoration: InputDecoration(border: InputBorder.none),
+              onChanged: (value) {},
+            ),
           );
   }
 }

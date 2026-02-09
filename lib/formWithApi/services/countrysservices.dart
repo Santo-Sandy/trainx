@@ -1,17 +1,32 @@
 import 'package:StoreLink/formWithApi/services/countrys.dart';
 import 'package:dio/dio.dart';
 
-class Countrysservices {
-  final Dio dio = Dio();
+class ApiClient {
+  static final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: "https://restcountries.com/v3.1",
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  );
+}
 
-  Future<List<Countrys>> getcountrys() async {
+class CountrysService {
+  Future<List<Countrys>> getCountries() async {
     try {
-      final response = await dio.get(
-        'https://gist.github.com/devhammed/78cfbee0c36dfdaa4fce7e79c0d39208#file-countries-json',
+      final response = await ApiClient.dio.get(
+        '/all',
+        queryParameters: {'fields': 'name,idd,flags'},
       );
-      return (response.data as List).map((e) => Countrys.fromJson(e)).toList();
+
+      final List data = response.data;
+
+      return data
+          .map((json) => Countrys.fromJson(json))
+          .where((c) => c.dialCode.isNotEmpty)
+          .toList();
     } on DioException catch (e) {
-      throw Exception('API Error: ${e.response?.statusCode}');
+      throw Exception("Failed to load countries: ${e.message}");
     }
   }
 }

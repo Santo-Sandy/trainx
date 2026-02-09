@@ -13,8 +13,8 @@ class CountryService {
   Future<List<Country>> fetchCountries() async {
     try {
       final response = await dio.get(
-        '/all',
-        queryParameters: {'fields': 'name'},
+        '/all?fields=name,idd,flags',
+        queryParameters: {'fields': ('name', 'idd', 'flags')},
       );
 
       return (response.data as List).map((e) => Country.fromJson(e)).toList();
