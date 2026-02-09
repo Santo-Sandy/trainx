@@ -1,6 +1,7 @@
 import 'package:StoreLink/bloc/counter_screen.dart';
 import 'package:StoreLink/column.dart';
 import 'package:StoreLink/counters.dart';
+import 'package:StoreLink/formWithApi/form.dart';
 import 'package:StoreLink/httpdio.dart';
 import 'package:StoreLink/localstore.dart';
 import 'package:StoreLink/main.dart';
@@ -40,5 +41,6 @@ final router = GoRouter(
     ),
     GoRoute(path: '/httpdio', builder: (context, state) => http_dio()),
     GoRoute(path: '/Localstore', builder: (context, state) => Localstore()),
+    GoRoute(path: '/forms', builder: (context, state) => Forms()),
   ],
 );

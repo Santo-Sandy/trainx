@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class srcolls extends StatefulWidget {
   const srcolls({super.key});
@@ -13,7 +14,10 @@ class _srcollsState extends State<srcolls> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 150, 187, 194),
-        leading: Icon(Icons.layers, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "Scroll",
           style: TextStyle(fontSize: 20, color: Colors.white),

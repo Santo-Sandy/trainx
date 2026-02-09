@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class name extends StatefulWidget {
   const name({super.key});
@@ -30,7 +31,10 @@ class _nameState extends State<name> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 131, 163, 179),
-        leading: Icon(Icons.input, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "Input Welcome",
           style: TextStyle(fontSize: 20, color: Colors.white),

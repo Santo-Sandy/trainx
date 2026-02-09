@@ -11,7 +11,10 @@ class Navigation extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 142, 177, 194),
-          leading: Icon(Icons.route, color: Colors.white),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => context.pop(),
+          ),
           title: Text(
             "Navigation with data",
             style: TextStyle(fontSize: 20, color: Colors.white),

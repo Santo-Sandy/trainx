@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class stacks extends StatelessWidget {
   const stacks({super.key});
@@ -8,7 +9,10 @@ class stacks extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 150, 187, 194),
-        leading: Icon(Icons.layers_outlined, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "Stacking",
           style: TextStyle(fontSize: 20, color: Colors.white),

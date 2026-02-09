@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class navigated_screen extends StatelessWidget {
   final id;
@@ -9,7 +10,10 @@ class navigated_screen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 142, 177, 194),
-        leading: Icon(Icons.route, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "Navigation with data",
           style: TextStyle(fontSize: 20, color: Colors.white),

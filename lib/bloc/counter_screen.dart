@@ -2,6 +2,7 @@ import 'package:StoreLink/bloc/counter_event.dart';
 import 'package:StoreLink/bloc/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'counter_bloc.dart';
 
 class CounterScreen extends StatelessWidget {
@@ -12,7 +13,10 @@ class CounterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 142, 177, 194),
-        leading: const Icon(Icons.add_box_rounded, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: const Text(
           "Bloc Counter",
           style: TextStyle(fontSize: 20, color: Colors.white),

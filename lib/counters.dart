@@ -1,5 +1,6 @@
 import 'package:StoreLink/counter.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class home extends StatefulWidget {
@@ -18,7 +19,10 @@ class _homeState extends State<home> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 142, 177, 194),
-          leading: Icon(Icons.add_to_photos_rounded, color: Colors.white),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => context.pop(),
+          ),
           title: Text(
             "Counter",
             style: TextStyle(fontSize: 20, color: Colors.white),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class columnpage extends StatefulWidget {
   const columnpage({super.key});
@@ -13,7 +14,10 @@ class _columnState extends State<columnpage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 150, 187, 194),
-        leading: Icon(Icons.layers_outlined, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "Layout",
           style: TextStyle(fontSize: 20, color: Colors.white),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class http_dio extends StatelessWidget {
   const http_dio({super.key});
@@ -9,7 +10,10 @@ class http_dio extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 142, 177, 194),
-        leading: Icon(Icons.route, color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "Navigation with data",
           style: TextStyle(fontSize: 20, color: Colors.white),

@@ -1,19 +1,13 @@
 import 'package:StoreLink/bloc/counter_bloc.dart';
 import 'package:StoreLink/counter.dart';
-import 'package:StoreLink/localstore.dart';
 import 'package:StoreLink/router.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  Hive.registerAdapter(UserAdapter());
-  await Hive.openBox<store>('users');
   runApp(index());
 }
 
@@ -57,7 +51,7 @@ class MainApp extends StatelessWidget {
       title: 'Home',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 0, 255, 157),
+          seedColor: const Color.fromARGB(255, 3, 109, 128),
         ),
       ),
       home: MyHomePage(),
@@ -98,49 +92,49 @@ class MyHomePage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/welcome");
+                    context.push("/welcome");
                   },
                   child: Text("Welcome"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/counter/hi");
+                    context.push("/counter/hi");
                   },
                   child: Text("Counter"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/counterscreen");
+                    context.push("/counterscreen");
                   },
                   child: Text("Bloc Counter"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/layout");
+                    context.push("/layout");
                   },
                   child: Text("Layouts"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/stack");
+                    context.push("/stack");
                   },
                   child: Text("Stack"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/scrolls");
+                    context.push("/scrolls");
                   },
                   child: Text("Scroll"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/navigation");
+                    context.push("/navigation");
                   },
                   child: Text("Navigation"),
                 ),
@@ -152,16 +146,16 @@ class MyHomePage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/httpdio");
+                    context.push("/httpdio");
                   },
                   child: Text("Http/Dio"),
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    context.go("/Localstore");
+                    context.push("/forms");
                   },
-                  child: Text("Localstorage"),
+                  child: Text("Form"),
                 ),
                 SizedBox(height: 40),
               ],
