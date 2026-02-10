@@ -37,262 +37,266 @@ class formdetails extends StatefulWidget {
 class _formdetailsState extends State<formdetails> {
   final formkey = GlobalKey<FormState>();
   String? gender;
-  String? selectedrole;
+  String? selectedrole = "Customer";
   bool termsandpolicy = false;
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController datecontroller = TextEditingController();
+  bool visible = true;
+
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    phonecontroller.dispose();
+    datecontroller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: SizedBox(
-          width: 400,
-          height: double.infinity,
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUnfocus,
-            key: formkey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              spacing: 20,
-              children: [
-                Text(
-                  "Login Form",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+    return Center(
+      child: SizedBox(
+        width: 400,
+        height: double.infinity,
+        child: Form(
+          autovalidateMode: AutovalidateMode.onUnfocus,
+          key: formkey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            spacing: 20,
+            children: [
+              Text(
+                "Login Form",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextFormField(
+                controller: emailcontroller,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: "Email*",
+                  prefixIcon: Icon(Icons.email_outlined),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                TextFormField(
-                  controller: emailcontroller,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Email*",
-                    prefixIcon: Icon(Icons.email_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Email Required";
+                  }
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
+                  if (!emailRegex.hasMatch(value)) {
+                    return "Enter a valid email";
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                controller: phonecontroller,
+                keyboardType: TextInputType.phone,
+                maxLength: 10,
+                decoration: InputDecoration(
+                  labelText: "Mobile Number",
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: countryphone(),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Email Required";
-                    } else if (RegExp(
-                      r'^[\w-\.]+~[A-Z](?!.*\s)(?!.*[A-Z])+@([\w-]+\.[\w-])$',
-                    ).hasMatch(value)) {
-                      return "Enter a valid email";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  controller: phonecontroller,
-                  maxLength: 10,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: "Mobile number*",
-                    prefixIcon: Container(width: 60, child: countryphone()),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Mobile number Required";
-                    } else if (RegExp(r'^[6-9].\d{9}$').hasMatch(value)) {
-                      return "Enter a valid mobile number";
-                    } else {
-                      return null;
-                    }
-                  },
                 ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  controller: phonecontroller,
-                  maxLength: 10,
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    labelText: "Mobile number*",
-                    prefixIcon: Icon(Icons.phone_android),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Mobile number required";
+                  }
+                  if (!RegExp(r'^[0-9]{6,12}$').hasMatch(value)) {
+                    return "Enter a valid mobile number";
+                  }
+                  return null;
+                },
+              ),
+              Row(
+                children: [
+                  Radio<String>(
+                    value: "Male",
+                    activeColor: Colors.blue,
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value;
+                      });
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Mobile number Required";
-                    } else if (RegExp(r'^[6-9].\d{9}$').hasMatch(value)) {
-                      return "Enter a valid mobile number";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                Row(
-                  children: [
-                    Radio<String>(
-                      value: "Male",
-                      activeColor: Colors.blue,
-                      groupValue: gender,
-                      onChanged: (value) {
-                        setState(() {
-                          gender = value;
-                        });
-                      },
-                    ),
-                    Text("Male"),
-                    SizedBox(width: 20),
-                    Radio<String>(
-                      activeColor: Colors.blue,
-                      value: "Female",
-                      groupValue: gender,
-                      onChanged: (value) {
-                        setState(() {
-                          gender = value;
-                        });
-                      },
-                    ),
-                    Text("Female"),
-                  ],
-                ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  controller: datecontroller,
-                  keyboardType: TextInputType.datetime,
-                  smartDashesType: SmartDashesType.enabled,
-                  decoration: InputDecoration(
-                    labelText: "Date of birth*",
-                    prefixIcon: Icon(Icons.calendar_month_outlined),
-                    suffixIcon: InkWell(
-                      child: Icon(Icons.date_range_outlined),
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                        );
-                        if (pickedDate != null) {
-                          datecontroller.text =
-                              "${pickedDate.day.toString().padLeft(2, '0')}/"
-                              "${pickedDate.month.toString().padLeft(2, '0')}/"
-                              "${pickedDate.year}";
-                        }
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  Text("Male"),
+                  SizedBox(width: 20),
+                  Radio<String>(
+                    activeColor: Colors.blue,
+                    value: "Female",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value;
+                      });
+                    },
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Date of birth reuired";
-                    } else if (RegExp(
-                      r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\d{2}$',
-                    ).hasMatch(value)) {
-                      return "Enter a valid date of birth";
-                    } else {
-                      return null;
-                    }
-                  },
+                  Text("Female"),
+                ],
+              ),
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUnfocus,
+                controller: datecontroller,
+                keyboardType: TextInputType.datetime,
+                smartDashesType: SmartDashesType.enabled,
+                decoration: InputDecoration(
+                  labelText: "Date of birth*",
+                  prefixIcon: Icon(Icons.calendar_month_outlined),
+                  suffixIcon: InkWell(
+                    child: Icon(Icons.date_range_outlined),
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime.now(),
+                      );
+                      if (pickedDate != null) {
+                        datecontroller.text =
+                            "${pickedDate.day.toString().padLeft(2, '0')}/"
+                            "${pickedDate.month.toString().padLeft(2, '0')}/"
+                            "${pickedDate.year}";
+                      }
+                    },
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-                countrydropdown(),
-                DropdownButtonFormField(
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  value: selectedrole,
-                  items: ["Customer", "Owner", "Developer"]
-                      .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                      .toList(),
-                  onChanged: (value) {
+              ),
+              countrydropdown(),
+              DropdownButtonFormField(
+                isExpanded: true,
+                autovalidateMode: AutovalidateMode.onUnfocus,
+                value: selectedrole,
+                items: ["Customer", "Owner", "Developer"]
+                    .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
                     selectedrole = value;
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return "please select a role";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Select Role",
-                    prefixIcon: Icon(Icons.perm_identity_sharp),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  });
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return "please select a role";
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Select Role",
+                  prefixIcon: Icon(Icons.perm_identity_sharp),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.onUnfocus,
-                  controller: passwordcontroller,
-                  obscureText: true,
-                  keyboardType: TextInputType.visiblePassword,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: Icon(Icons.remove_red_eye_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+              ),
+              TextFormField(
+                autovalidateMode: AutovalidateMode.onUnfocus,
+                controller: passwordcontroller,
+                obscureText: visible,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        visible = !visible;
+                      });
+                    },
+                    icon: Icon(
+                      visible ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Password Required";
-                    } else if (value.length < 8) {
-                      return "Minium 8 characters required";
-                    } else if (RegExp(
-                      r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?])[[A-Za-z]\d[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?]{8,}$',
-                    ).hasMatch(value)) {
-                      return "Minium 8 characters required,At least one captial and one small letter,At least one number,At least one special charcter";
-                    } else {
-                      return null;
-                    }
-                  },
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: termsandpolicy,
-                      onChanged: (value) {
-                        setState(() {
-                          termsandpolicy = value!;
-                        });
-                      },
-                    ),
-                    Text(
-                      "Terms and Policy",
-                      style: TextStyle(color: Colors.black38),
-                    ),
-                  ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Password Required";
+                  }
+                  final passwordRegex = RegExp(
+                    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$',
+                  );
+                  if (!passwordRegex.hasMatch(value)) {
+                    return "Min 8 chars, upper, lower, number & special char required";
+                  }
+                  return null;
+                },
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    value: termsandpolicy,
+                    onChanged: (value) {
+                      setState(() {
+                        termsandpolicy = value!;
+                      });
+                    },
+                  ),
+                  Text(
+                    "Terms and Policy",
+                    style: TextStyle(color: Colors.black38),
+                  ),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (formkey.currentState!.validate() && termsandpolicy) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Form Submitted Successfully")),
+                    );
+                    emailcontroller.clear();
+                    passwordcontroller.clear();
+                    phonecontroller.clear();
+                    datecontroller.clear();
+                    selectedrole = null;
+                  } else if (!termsandpolicy) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Tick the terms and policy!")),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Form Submitted has error!")),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 4,
+                  backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (formkey.currentState!.validate() && termsandpolicy) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Form Submitted Successfully")),
-                      );
-                      emailcontroller.clear();
-                      passwordcontroller.clear();
-                      phonecontroller.clear();
-                      datecontroller.clear();
-                      selectedrole = null;
-                    } else if (!termsandpolicy) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Tick the terms and policy!")),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Form Submitted has error!")),
-                      );
-                    }
-                  },
-                  child: Text("Submit"),
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -322,6 +326,11 @@ class _countrydropdownState extends State<countrydropdown> {
   Future<void> loadCountries() async {
     try {
       countries = await countrygetservice.fetchCountries();
+      selectedCountry = countries.firstWhere(
+        (country) => country.dialCode == "+91",
+        orElse: () => countries.first,
+      );
+      setState(() {});
     } catch (e) {
       debugPrint(e.toString());
     } finally {
@@ -336,6 +345,7 @@ class _countrydropdownState extends State<countrydropdown> {
     return isLoading
         ? CircularProgressIndicator()
         : DropdownButtonFormField<Country>(
+            isExpanded: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             value: selectedCountry,
             decoration: InputDecoration(
@@ -348,7 +358,23 @@ class _countrydropdownState extends State<countrydropdown> {
             items: countries.map((country) {
               return DropdownMenuItem<Country>(
                 value: country,
-                child: Text(country.name),
+                child: Row(
+                  children: [
+                    Image.network(
+                      country.flag,
+                      width: 24,
+                      height: 16,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        country.name,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
               );
             }).toList(),
             onChanged: (value) {
@@ -391,6 +417,11 @@ class _countryphoneState extends State<countryphone> {
   loaddata() async {
     try {
       countrieslist = await countrygetservices.getCountries();
+      selectedcountriesdialcode = countrieslist.firstWhere(
+        (country) => country.dialCode == "+91", // India
+        orElse: () => countrieslist.first,
+      );
+      setState(() {});
     } catch (e) {
       debugPrint(e.toString());
     } finally {
@@ -404,21 +435,43 @@ class _countryphoneState extends State<countryphone> {
   Widget build(BuildContext context) {
     return isloading
         ? CircularProgressIndicator()
-        : Flexible(
+        : Container(
+            width: 80,
             child: DropdownButtonFormField<Countrys>(
+              isExpanded: true,
               value: selectedcountriesdialcode,
               items: countrieslist.map((country) {
                 return DropdownMenuItem<Countrys>(
                   value: country,
-                  child: Text(
-                    country.dialCode,
-                    style: TextStyle(overflow: TextOverflow.fade),
-                    textAlign: TextAlign.center,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.network(
+                        country.flag,
+                        width: 20,
+                        height: 14,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) =>
+                            const Icon(Icons.flag_outlined, size: 16),
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          country.dialCode,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }).toList(),
               decoration: InputDecoration(border: InputBorder.none),
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedcountriesdialcode = value;
+                });
+              },
             ),
           );
   }
