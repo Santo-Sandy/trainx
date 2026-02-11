@@ -1,13 +1,17 @@
 import 'package:StoreLink/bloc/counter_bloc.dart';
 import 'package:StoreLink/counter.dart';
 import 'package:StoreLink/router.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
+late List<CameraDescription> cameras;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   runApp(index());
 }
 
@@ -158,6 +162,12 @@ class MyHomePage extends StatelessWidget {
                   child: Text("Form"),
                 ),
                 SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    context.push("/camera");
+                  },
+                  child: const Text("Open Camera"),
+                ),
               ],
             ),
           ],

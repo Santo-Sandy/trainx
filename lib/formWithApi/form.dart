@@ -59,7 +59,6 @@ class _formdetailsState extends State<formdetails> {
     return Center(
       child: SizedBox(
         width: 400,
-        height: double.infinity,
         child: Form(
           autovalidateMode: AutovalidateMode.onUnfocus,
           key: formkey,
@@ -184,7 +183,7 @@ class _formdetailsState extends State<formdetails> {
               DropdownButtonFormField(
                 isExpanded: true,
                 autovalidateMode: AutovalidateMode.onUnfocus,
-                value: selectedrole,
+                initialValue: selectedrole,
                 items: ["Customer", "Owner", "Developer"]
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                     .toList(),
@@ -347,7 +346,7 @@ class _countrydropdownState extends State<countrydropdown> {
         : DropdownButtonFormField<Country>(
             isExpanded: true,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            value: selectedCountry,
+            initialValue: selectedCountry,
             decoration: InputDecoration(
               labelText: "Select Country",
               border: OutlineInputBorder(
@@ -389,7 +388,6 @@ class _countrydropdownState extends State<countrydropdown> {
               return null;
             },
           );
-    ;
   }
 }
 
@@ -414,7 +412,7 @@ class _countryphoneState extends State<countryphone> {
     loaddata();
   }
 
-  loaddata() async {
+  Future<void> loaddata() async {
     try {
       countrieslist = await countrygetservices.getCountries();
       selectedcountriesdialcode = countrieslist.firstWhere(
@@ -435,11 +433,11 @@ class _countryphoneState extends State<countryphone> {
   Widget build(BuildContext context) {
     return isloading
         ? CircularProgressIndicator()
-        : Container(
+        : SizedBox(
             width: 80,
             child: DropdownButtonFormField<Countrys>(
               isExpanded: true,
-              value: selectedcountriesdialcode,
+              initialValue: selectedcountriesdialcode,
               items: countrieslist.map((country) {
                 return DropdownMenuItem<Countrys>(
                   value: country,
